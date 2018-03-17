@@ -51,21 +51,17 @@ CREATE TABLE Requests (
     Sprvsr_Approval     NUMBER(3)   NOT NULL,
     Dpt_Head_Id         NUMBER(3)   NOT NULL,
     Dpt_Head_Approval   NUMBER(3)   NOT NULL,
-    Event_Id            NUMBER(3)   NOT NULL,
+    EventType_Id        NUMBER(3)   NOT NULL,
+    EventName           VARCHAR2(50)    NOT NULL,
+    EventCost           NUMBER(6,2)     NOT NULL,
+    ReqReimb            NUMBER(6,2)     NOT NULL,
     Evidence_Id         NUMBER(3),
-    Grade_Id            NUMBER(3)   NOT NULL,
-    Reimbursement       NUMBER(6,2) NOT NULL
+    Grade_Id            NUMBER(3)       NOT NULL
 );
 /
---Add table for describing the event for which reimbursement is requested
-CREATE TABLE Events (
-    id          NUMBER(3)       PRIMARY KEY,
-    Name        VARCHAR2(50)    NOT NULL,
-    Cost        NUMBER(6,2)     NOT NULL
-);
-/
+
 --Add table describing the type of educational event
-CREATE TABLE EventType(
+CREATE TABLE EventTypes(
     id          NUMBER(3)       PRIMARY KEY,
     Name        VARCHAR2(50)    UNIQUE NOT NULL,
     Coverage    NUMBER(1,2)     NOT NULL
