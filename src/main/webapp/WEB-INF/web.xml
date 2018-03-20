@@ -5,6 +5,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>comingsoon</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>asd</url-pattern>
     </servlet-mapping>
 </web-app>

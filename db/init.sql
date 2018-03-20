@@ -59,7 +59,8 @@ CREATE TABLE Requests (
     EventCost           NUMBER(6,2)     NOT NULL,
     ReqReimb            NUMBER(6,2)     NOT NULL,
     Evidence_Id         NUMBER(3),
-    Grade_Id            NUMBER(3)       NOT NULL
+    Grade_Id            NUMBER(3)       NOT NULL,
+    Justification	VARCHAR2(150)
 );
 /
 
