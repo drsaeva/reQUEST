@@ -12,26 +12,53 @@ public class Request {
 	private int 	deptHeadApproval;
 	private int		requestStatus;
 	private String	justification;
+	private int		isUrgent;
 	
 	// event-specific info
+	private int		eventTypeId;
 	private String 	eventName;
 	private String 	eventDateTime;
+	private String 	eventEndDate;
 	private double 	eventCost;
-	private int		eventTypeId;
-	private double 	coverageAmt;
 	private double 	reimbursementAmt;
 	
-	// suporting evidence info
-	private int		evidenceId;
+	
+	// supporting evidence info
 	private String  evidenceDirectoryLink;
-	private int		hasApproval;
-	private int		hasFinalGrade;
+	private int		evidenceHasApproval;
 	
 	// grade info
 	private String	gradeFormat;
 	private String	passingGrade;
 	private String	finalGrade;
 	private int	passOrFail;
+	
+	
+	/*
+ID                   NOT NULL NUMBER(3)     
+REQUESTOR_ID         NOT NULL NUMBER(3)     
+DATESUBMITTED        NOT NULL DATE          
+SPRVSR_ID            NOT NULL NUMBER(3)     
+SPRVSR_APPROVAL      NOT NULL NUMBER(3)     
+DPT_HEAD_ID          NOT NULL NUMBER(3)     
+DPT_HEAD_APPROVAL    NOT NULL NUMBER(3)     
+REQUEST_STATUS       NOT NULL NUMBER(2)     
+EVENTTYPE_ID         NOT NULL NUMBER(3)     
+EVENTNAME            NOT NULL VARCHAR2(50)  
+EVENTDATETIME        NOT NULL TIMESTAMP(6)  
+EVENTENDDATE         NOT NULL TIMESTAMP(6)  
+EVENTCOST            NOT NULL NUMBER(6,2)   
+REQREIMB             NOT NULL NUMBER(6,2)   
+URGENT                        NUMBER(1)     
+JUSTIFICATION                 VARCHAR2(150) 
+EVIDENCE_DIRLINK     NOT NULL VARCHAR2(128) 
+EVIDENCE_HASAPPROVAL NOT NULL NUMBER(1)     
+GRADEFORMAT          NOT NULL VARCHAR2(16)  
+PASSINGGRADE         NOT NULL VARCHAR2(8)   
+FINALGRADE           NOT NULL VARCHAR2(8)   
+PASSORFAIL           NOT NULL NUMBER(1)   
+	 */
+
 	
 	// No-args constructor
 	public Request() { }
@@ -98,6 +125,12 @@ public class Request {
 	public void setEventDateTime(String eventDateTime) {
 		this.eventDateTime = eventDateTime;
 	}
+	public String getEventEndDate() {
+		return eventEndDate;
+	}
+	public void setEventEndDate(String eventEndDate) {
+		this.eventEndDate = eventEndDate;
+	}
 	public double getEventCost() {
 		return eventCost;
 	}
@@ -110,41 +143,29 @@ public class Request {
 	public void setEventTypeId(int eventTypeId) {
 		this.eventTypeId = eventTypeId;
 	}
-	public double getCoverageAmt() {
-		return coverageAmt;
-	}
-	public void setCoverageAmt(double coverageAmt) {
-		this.coverageAmt = coverageAmt;
-	}
 	public double getReimbursementAmt() {
 		return reimbursementAmt;
 	}
 	public void setReimbursementAmt(double reimbursementAmt) {
 		this.reimbursementAmt = reimbursementAmt;
 	}
-	public int getEvidenceId() {
-		return evidenceId;
+	public int getUrgent() {
+		return isUrgent;
 	}
-	public void setEvidenceId(int evidenceId) {
-		this.evidenceId = evidenceId;
-	}	
+	public void setUrgent(int isUrgent) {
+		this.isUrgent = isUrgent;
+	}
 	public String getEvidenceDirectoryLink() {
 		return evidenceDirectoryLink;
 	}
 	public void setEvidenceDirectoryLink(String evidenceDirectoryLink) {
 		this.evidenceDirectoryLink = evidenceDirectoryLink;
 	}
-	public int getHasApproval() {
-		return hasApproval;
+	public int getEvidenceHasApproval() {
+		return evidenceHasApproval;
 	}
-	public void setHasApproval(int hasApproval) {
-		this.hasApproval = hasApproval;
-	}
-	public int getHasFinalGrade() {
-		return hasFinalGrade;
-	}
-	public void setHasFinalGrade(int hasFinalGrade) {
-		this.hasFinalGrade = hasFinalGrade;
+	public void setEvidenceHasApproval(int evidenceHasApproval) {
+		this.evidenceHasApproval = evidenceHasApproval;
 	}
 	public String getGradeFormat() {
 		return gradeFormat;

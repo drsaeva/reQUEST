@@ -4,5 +4,6 @@ import com.revature.reQUEST.pojo.Employee;
 
 public interface EmployeeDao {
 
-	public Employee getEmployeeByUsername(String username);
+	public Employee getEmployeeForLogin(String email, String password);
+	public Employee getEmployee(int id);
 }

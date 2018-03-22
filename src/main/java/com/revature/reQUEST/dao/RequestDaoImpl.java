@@ -13,8 +13,49 @@ import com.revature.reQUEST.util.ConnectionFactory;
 public class RequestDaoImpl implements RequestDao {
 
 	public List<Request> getRequestsForEmployee(int employeeId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Request> myReq = new ArrayList<Request>();
+		Connection conn = ConnectionFactory.getInstance().getConnection();
+		String sql = "SELECT * FROM REQUESTS WHERE REQUESTOR_ID = ? ";
+		Request req = null;
+		
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, employeeId);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				req = new Request();
+				req.setId(rs.getInt(1));
+				req.setRequestorId(rs.getInt(2));
+				req.setDateSubmitted(rs.getString(3));
+				req.setSprvsrId(rs.getInt(4));
+				req.setSprvsrApproval(rs.getInt(5));
+				req.setDeptHeadId(rs.getInt(6));
+				req.setDeptHeadApproval(rs.getInt(7));
+				req.setRequestStatus(rs.getInt(8));
+				req.setEventTypeId(rs.getInt(9));
+				req.setEventName(rs.getString(10));
+				req.setEventDateTime(rs.getString(11));
+				req.setEventEndDate(rs.getString(12));
+				req.setEventCost(rs.getDouble(13));
+				req.setReimbursementAmt(rs.getDouble(14));
+				req.setUrgent(rs.getInt(15));
+				req.setJustification(rs.getString(16));
+				req.setEvidenceDirectoryLink(rs.getString(17));
+				req.setEvidenceHasApproval(rs.getInt(18));
+				req.setGradeFormat(rs.getString(19));
+				req.setPassingGrade(rs.getString(20));
+				req.setFinalGrade(rs.getString(21));
+				req.setPassOrFail(rs.getInt(22));
+				myReq.add(req);	
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return myReq;
 	}
 	
 	/**
@@ -24,13 +65,7 @@ public class RequestDaoImpl implements RequestDao {
 	public List<Request> getAllRequests() {
 		List<Request> allReq = new ArrayList<Request>();
 		Connection conn = ConnectionFactory.getInstance().getConnection();
-		String sql = "select r.id, r.requestor_id, r.datesubmitted, r.sprvsr_id, r.sprvsr_approval, r.dpt_head_id, r.dpt_head_approval, r.request_status, " + 
-				"e.name, r.eventdatetime, r.eventcost, r.eventtype_id, e.coverage, r.reqreimb, se.dirlink, se.hasapproval, " + 
-				"se.hasfinalgrade, g.gradeformat, g.passinggrade, g.finalgrade, g.passorfail, r.justification " + 
-				"from requests r, eventtypes e, grades g, SUPPORTINGEVIDENCE se " + 
-				"where r.eventtype_id = e.id " + 
-				"and r.evidence_id = se.id " + 
-				"and r.grade_id = g.id ";
+		String sql = "SELECT * FROM RESULTS ";
 		Request req = null;
 		try {
 			conn.setAutoCommit(false);
@@ -47,20 +82,20 @@ public class RequestDaoImpl implements RequestDao {
 				req.setDeptHeadId(rs.getInt(6));
 				req.setDeptHeadApproval(rs.getInt(7));
 				req.setRequestStatus(rs.getInt(8));
-				req.setEventName(rs.getString(9));
-				req.setEventDateTime(rs.getString(10));
-				req.setEventCost(rs.getDouble(11));
-				req.setEventTypeId(rs.getInt(12));
-				req.setCoverageAmt(rs.getDouble(13));
+				req.setEventTypeId(rs.getInt(9));
+				req.setEventName(rs.getString(10));
+				req.setEventDateTime(rs.getString(11));
+				req.setEventEndDate(rs.getString(12));
+				req.setEventCost(rs.getDouble(13));
 				req.setReimbursementAmt(rs.getDouble(14));
-				req.setEvidenceDirectoryLink(rs.getString(15));
-				req.setHasApproval(rs.getInt(16));
-				req.setHasFinalGrade(rs.getInt(17));
-				req.setGradeFormat(rs.getString(18));
-				req.setPassingGrade(rs.getString(19));
-				req.setPassOrFail(rs.getInt(20));
-				req.setJustification(rs.getString(21));
-				
+				req.setUrgent(rs.getInt(15));
+				req.setJustification(rs.getString(16));
+				req.setEvidenceDirectoryLink(rs.getString(17));
+				req.setEvidenceHasApproval(rs.getInt(18));
+				req.setGradeFormat(rs.getString(19));
+				req.setPassingGrade(rs.getString(20));
+				req.setFinalGrade(rs.getString(21));
+				req.setPassOrFail(rs.getInt(22));
 				allReq.add(req);	
 			}	
 			
@@ -72,21 +107,14 @@ public class RequestDaoImpl implements RequestDao {
 
 	/**
 	 * Returns all request records for a given department
-	 * @param int	id code corresponding to the department
+	 * @param int	department's id (Departments.Id)
 	 * @return		list of records
 	 */
 	public List<Request> getAllRequestsByDept(int departmentId) {
 		List<Request> depReq = new ArrayList<Request>();
 		Connection conn = ConnectionFactory.getInstance().getConnection();
-		String sql = "select r.id, r.requestor_id, r.datesubmitted, r.sprvsr_id, r.sprvsr_approval, r.dpt_head_id, r.dpt_head_approval, r.request_status, " + 
-				"e.name, r.eventdatetime, r.eventcost, r.eventtype_id, e.coverage, r.reqreimb, se.dirlink, se.hasapproval, " + 
-				"se.hasfinalgrade, g.gradeformat, g.passinggrade, g.finalgrade, g.passorfail, r.justification " + 
-				"from requests r, eventtypes e, grades g, SUPPORTINGEVIDENCE se " + 
-				"where r.eventtype_id = e.id " + 
-				"and r.evidence_id = se.id " + 
-				"and r.grade_id = g.id "
-				+ "and r.requestor_id = ("
-				+ "select emp.id from employees emp where emp.department_id = ? ) ";
+		String sql = "SELECT * FROM REQUESTS WHERE REQUESTOR_ID = ("
+				+ "SELECT EMP.ID FROM EMPLOYEES EMP WHERE EMP.DEPARTMENT_ID = ? ) ";
 		Request req = null;
 		
 		try {
@@ -105,20 +133,21 @@ public class RequestDaoImpl implements RequestDao {
 				req.setDeptHeadId(rs.getInt(6));
 				req.setDeptHeadApproval(rs.getInt(7));
 				req.setRequestStatus(rs.getInt(8));
-				req.setEventName(rs.getString(9));
-				req.setEventDateTime(rs.getString(10));
-				req.setEventCost(rs.getDouble(11));
-				req.setEventTypeId(rs.getInt(12));
-				req.setCoverageAmt(rs.getDouble(13));
+				req.setEventTypeId(rs.getInt(9));
+				req.setEventName(rs.getString(10));
+				req.setEventDateTime(rs.getString(11));
+				req.setEventEndDate(rs.getString(12));
+				req.setEventCost(rs.getDouble(13));
 				req.setReimbursementAmt(rs.getDouble(14));
-				req.setEvidenceDirectoryLink(rs.getString(15));
-				req.setHasApproval(rs.getInt(16));
-				req.setHasFinalGrade(rs.getInt(17));
-				req.setGradeFormat(rs.getString(18));
-				req.setPassingGrade(rs.getString(19));
-				req.setPassOrFail(rs.getInt(20));
-				req.setJustification(rs.getString(21));
-				depReq.add(req);
+				req.setUrgent(rs.getInt(15));
+				req.setJustification(rs.getString(16));
+				req.setEvidenceDirectoryLink(rs.getString(17));
+				req.setEvidenceHasApproval(rs.getInt(18));
+				req.setGradeFormat(rs.getString(19));
+				req.setPassingGrade(rs.getString(20));
+				req.setFinalGrade(rs.getString(21));
+				req.setPassOrFail(rs.getInt(22));
+				depReq.add(req);	
 			}
 			
 		} catch (SQLException e) {
@@ -128,18 +157,16 @@ public class RequestDaoImpl implements RequestDao {
 		return depReq;
 	}
 	
+	/**
+	 * Returns all request records for employees reporting to a given supervisor
+	 * @param int	supervisor's id (Employees.Id)
+	 * @return		list of records
+	 */
 	public List<Request> getAllRequestsBySupervisor(int supervisorId) {
 		List<Request> subReq = new ArrayList<Request>();
 		Connection conn = ConnectionFactory.getInstance().getConnection();
-		String sql = "select r.id, r.requestor_id, r.datesubmitted, r.sprvsr_id, r.sprvsr_approval, r.dpt_head_id, r.dpt_head_approval, r.request_status, " + 
-				"e.name, r.eventdatetime, r.eventcost, r.eventtype_id, e.coverage, r.reqreimb, se.dirlink, se.hasapproval, " + 
-				"se.hasfinalgrade, g.gradeformat, g.passinggrade, g.finalgrade, g.passorfail, r.justification " + 
-				"from requests r, eventtypes e, grades g, SUPPORTINGEVIDENCE se " + 
-				"where r.eventtype_id = e.id " + 
-				"and r.evidence_id = se.id " + 
-				"and r.grade_id = g.id "
-				+ "and r.requestor_id = ("
-				+ "select emp.id from employees emp where emp.reportsto_id = ? ) ";
+		String sql = "SELECT * FROM REQUESTS WHERE REQUESTOR_ID = ("
+				+ "SELECT EMP.ID FROM EMPLOYEES EMP WHERE EMP.REPORTSTO = ? ) ";
 		Request req = null;
 		
 		try {
@@ -158,19 +185,20 @@ public class RequestDaoImpl implements RequestDao {
 				req.setDeptHeadId(rs.getInt(6));
 				req.setDeptHeadApproval(rs.getInt(7));
 				req.setRequestStatus(rs.getInt(8));
-				req.setEventName(rs.getString(9));
-				req.setEventDateTime(rs.getString(10));
-				req.setEventCost(rs.getDouble(11));
-				req.setEventTypeId(rs.getInt(12));
-				req.setCoverageAmt(rs.getDouble(13));
+				req.setEventTypeId(rs.getInt(9));
+				req.setEventName(rs.getString(10));
+				req.setEventDateTime(rs.getString(11));
+				req.setEventEndDate(rs.getString(12));
+				req.setEventCost(rs.getDouble(13));
 				req.setReimbursementAmt(rs.getDouble(14));
-				req.setEvidenceDirectoryLink(rs.getString(15));
-				req.setHasApproval(rs.getInt(16));
-				req.setHasFinalGrade(rs.getInt(17));
-				req.setGradeFormat(rs.getString(18));
-				req.setPassingGrade(rs.getString(19));
-				req.setPassOrFail(rs.getInt(20));
-				req.setJustification(rs.getString(21));
+				req.setUrgent(rs.getInt(15));
+				req.setJustification(rs.getString(16));
+				req.setEvidenceDirectoryLink(rs.getString(17));
+				req.setEvidenceHasApproval(rs.getInt(18));
+				req.setGradeFormat(rs.getString(19));
+				req.setPassingGrade(rs.getString(20));
+				req.setFinalGrade(rs.getString(21));
+				req.setPassOrFail(rs.getInt(22));
 				subReq.add(req);
 			}
 			
@@ -182,12 +210,58 @@ public class RequestDaoImpl implements RequestDao {
 	}
 
 	public void createNewRequest(Request request) {
-		// TODO Auto-generated method stub
+		Connection conn = ConnectionFactory.getInstance().getConnection();
+		String sql = "INSERT INTO REQUESTS (REQUESTOR_ID, DATESUBMITTED, SPRVSR_ID, "
+				+ "SPRVSR_APPROVAL, DPT_HEAD_ID, DPT_HEAD_APPROVAL, REQUEST_STATUS, EVENTTYPE_ID, "
+				+ "EVENTNAME, EVENTDATETIME, EVENTENDDATE, EVENTCOST, REQREIMB, URGENT, "
+				+ "JUSTIFICATION, EVIDENCE_DIRLINK, EVIDENCE_HASAPPROVAL, GRADEFORMAT, "
+				+ "PASSINGGRADE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, request.getRequestorId());
+			ps.setString(2, request.getDateSubmitted());
+			ps.setInt(3,request.getSprvsrId());
+			ps.setInt(4,request.getSprvsrApproval());
+			ps.setInt(5,request.getDeptHeadId());
+			ps.setInt(6,request.getDeptHeadApproval());
+			ps.setInt(7, request.getRequestStatus());
+			ps.setInt(8, request.getEventTypeId());
+			ps.setString(9, request.getEventName());
+			ps.setString(10, request.getEventDateTime());
+			ps.setString(11, request.getEventEndDate());
+			ps.setDouble(12, request.getEventCost());
+			ps.setDouble(13, request.getReimbursementAmt());
+			ps.setInt(14, request.getUrgent());
+			ps.setString(15, request.getJustification());
+			ps.setString(16, request.getEvidenceDirectoryLink());
+			ps.setInt(17, request.getEvidenceHasApproval());
+			ps.setString(18, request.getGradeFormat());
+			ps.setString(19, request.getPassingGrade());
+			
+			int rowsAffected = ps.executeUpdate();
+			conn.commit();
+			conn.setAutoCommit(true);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
+	
+	/*
+	 *
+ID                   NOT NULL NUMBER(3)     
+REQUESTOR_ID, DATESUBMITTED, SPRVSR_ID, SPRVSR_APPROVAL, DPT_HEAD_ID, DPT_HEAD_APPROVAL, 
+REQUEST_STATUS, EVENTTYPE_ID, EVENTNAME, EVENTDATETIME, EVENTENDDATE, EVENTCOST, 
+REQREIMB, URGENT, JUSTIFICATION, EVIDENCE_DIRLINK, EVIDENCE_HASAPPROVAL, GRADEFORMAT, 
+PASSINGGRADE, FINALGRADE, PASSORFAIL         
+	 */
 
 	public void updatePendingRequest(Request request) {
-		// TODO Auto-generated method stub
+		 // TODO Auto-generated method stub
 		
 	}
 

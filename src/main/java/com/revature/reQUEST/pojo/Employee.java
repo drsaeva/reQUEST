@@ -7,14 +7,16 @@ package com.revature.reQUEST.pojo;
  */
 
 public class Employee {
+	private int id;
 	private String lastName;
 	private String firstName;
 	private String email;
 	private String password;
-	private int id;
 	private int reportsTo;
 	private int positionId;
-	private int departmentId;	
+	private String position;
+	private int departmentId;
+	private String department;
 	private double availableReimbursement;
 	private double totalReimbursement;
 	private double pendingReimbursement;
@@ -68,11 +70,23 @@ public class Employee {
 	public void setPositionId(int positionId) {
 		this.positionId = positionId;
 	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
 	public int getDepartmentId() {
 		return departmentId;
 	}
 	public void setDepartmentId(int departmentId) {
 		this.departmentId = departmentId;
+	}
+	public String getDepartment() {
+		return department;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 	public double getAvailableReimbursement() {
 		return availableReimbursement;
