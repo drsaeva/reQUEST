@@ -11,12 +11,38 @@
 
   <name>reQUEST</name>
   <url>http://maven.apache.org</url>
-
+   
+  <build>
+    <plugins>
+        <plugin>
+        	<groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.6.0</version>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
+        <plugin>
+       <artifactId>maven-war-plugin</artifactId>
+         <version>2.6</version>
+         <configuration>
+           <warSourceDirectory>WebContent</warSourceDirectory>
+           <failOnMissingWebXml>false</failOnMissingWebXml>
+         </configuration>
+       </plugin> 
+    </plugins>
+    
+    <finalName>reQUEST-TRMS</finalName>
+  </build>
+  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   	<jdk.version>1.8</jdk.version>
   	<junit.version>4.12</junit.version>
   	<log4j.version>1.2.17</log4j.version>
+  	<servlet.version>4.0.0</servlet.version>
+  	<jsonsimple.version>1.1.1</jsonsimple.version>
   </properties>
 
   <dependencies>
@@ -32,9 +58,18 @@
       <artifactId>log4j</artifactId>
       <version>${log4j.version}</version>
     </dependency>
+  
+  	<dependency>
+	  <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>${servlet.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.googlecode.json-simple</groupId>
+      <artifactId>json-simple</artifactId>
+      <version>${jsonsimple.version}</version>
+    </dependency>
   </dependencies>
   
-    <build>
-    <finalName>reQUEST-TRMS</finalName>
-  </build>
 </project>
