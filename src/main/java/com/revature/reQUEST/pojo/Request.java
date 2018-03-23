@@ -31,7 +31,7 @@ public class Request {
 	private String	gradeFormat;
 	private String	passingGrade;
 	private String	finalGrade;
-	private int	passOrFail;
+	private int		passOrFail;
 	
 	
 	/*
