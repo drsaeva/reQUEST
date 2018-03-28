@@ -28,8 +28,8 @@ public class ConnectionFactory {
 		Connection conn = null;
 		try {
 			Properties prop = new Properties();
-			prop.load(new FileReader("resources/database.properties"));
-			
+			prop.load(ConnectionFactory.class.getResourceAsStream("database.properties"));
+			Class.forName(prop.getProperty("driver"));
 			conn = DriverManager.getConnection(
 					prop.getProperty("url"),
 					prop.getProperty("usr"),
@@ -41,6 +41,8 @@ public class ConnectionFactory {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		

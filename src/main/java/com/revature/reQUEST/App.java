@@ -18,7 +18,7 @@ public class App
     public static void main( String[] args )
     {
     	
-    	/*LoginCredentials user = new LoginCredentials("j.stevens@fake.com", "1234");
+    	LoginCredentials user = new LoginCredentials("j.stevens@fake.com", "1234");
     	EmployeeUtils.setEmp(user);
         System.out.println(EmployeeUtils.authenticate());
         
@@ -34,6 +34,6 @@ public class App
 		// TODO store token and send response
 		if (TokenBox.getSessionToken() != null) {
 			System.out.println("Authorization: "+TokenBox.getSessionToken());
-		}*/
+		}
     }
 }

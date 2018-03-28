@@ -45,7 +45,7 @@
   	<java-jwt.version>3.3.0</java-jwt.version>
   	<jackson-2-version>2.9.4</jackson-2-version>
   </properties>
-
+  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -79,6 +79,11 @@
       <version>${java-jwt.version}</version>
 	</dependency>
   
+    <dependency>
+      <groupId>com.oracle</groupId>
+      <artifactId>ojdbc7</artifactId>
+      <version>12.1.0.1</version>
+    </dependency>
     
   </dependencies>
   

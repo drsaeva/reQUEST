@@ -42,18 +42,17 @@ public class AuthServlet extends HttpServlet {
 			JwtUtil tokenService = new JwtUtil();
 			try {
 				TokenBox.setSessionToken(tokenService.generateToken(emp));
-			} catch (NoSuchAlgorithmException | IOException e) {
+			} catch (NoSuchAlgorithmException | IOException e	) {
 				e.printStackTrace();
 			}
 			
 			// TODO store token and send response
 			if (TokenBox.getSessionToken() != null) {
-				response.addHeader("Authorization", TokenBox.getSessionToken());
-				response.sendRedirect("/landing");
+				response.addHeader("Authorization",TokenBox.getSessionToken());
 			}
 			
 		} else {
-			request.getRequestDispatcher("/login").forward(request, response);
+			request.getRequestDispatcher("#/login").forward(request, response);
 
 		}
 	}
