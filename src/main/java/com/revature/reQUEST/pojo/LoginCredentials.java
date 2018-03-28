@@ -15,6 +15,10 @@ public class LoginCredentials {
 		this.password = pw;
 	}
 	
+	public LoginCredentials() { }
+	
+	public void setEmail(String em) { this.email = em; }
+	public void setPassword(String pw) { this.password = pw; }
 	public String getEmail() { 		 return email; }
 	public String getPassword() { return password; }
 }

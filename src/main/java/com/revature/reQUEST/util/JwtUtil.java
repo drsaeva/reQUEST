@@ -7,8 +7,8 @@ import java.security.NoSuchAlgorithmException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.reQUEST.pojo.Employee;
+import com.fasterxml.jackson.databind.*;
 
 public class JwtUtil {
 	
@@ -16,7 +16,8 @@ public class JwtUtil {
 	
 	public String generateToken(Employee emp) throws NoSuchAlgorithmException, IOException{
 		String encryptedToken = null;
-		String userData = new ObjectMapper().writeValueAsString(emp);
+		ObjectMapper mapper = new ObjectMapper();
+		String userData = mapper.writeValueAsString(emp);
 		
 		// Prepare JWT with claims set
 		try {
