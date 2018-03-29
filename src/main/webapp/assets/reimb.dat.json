@@ -1,0 +1,8 @@
+{
+  "1": {"name": "University Course", "coverage": 0.8},
+  "2": {"name": "Seminar", "coverage": 0.6},
+  "3": {"name": "Certificate Preparation Course", "coverage": 0.75},
+  "4": {"name": "Certifcation", "coverage": 0.8},
+  "5": {"name": "Technical Training", "coverage": 0.9},
+  "6": {"name": "Other", "coverage":0.3},
+}
